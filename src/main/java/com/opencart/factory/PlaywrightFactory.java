@@ -2,18 +2,27 @@ package com.opencart.factory;
 
 import com.microsoft.playwright.*;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Properties;
+
 public class PlaywrightFactory {
 
     private Playwright playwright;
     private Browser browser;
     private BrowserContext browserContext;
+
     private Page page;
 
+    Properties prop;
 
-    public Page initBrowser(String browserName) {
+
+    public Page initBrowser(Properties prop) {
         playwright = Playwright.create();
+        String browserName = prop.getProperty("browser").trim();
 
-        System.out.println("Browser Name is:"+ browserName);
+        System.out.println("Browser Name is:" + browserName);
 
         switch (browserName.toLowerCase()) {
             case "chromium":
@@ -38,8 +47,24 @@ public class PlaywrightFactory {
 
         browserContext = browser.newContext();
         page = browserContext.newPage();
-        page.navigate("https://naveenautomationlabs.com/opencart/");
+        page.navigate(prop.getProperty("url").trim());
         return page;
+    }
+
+    public Properties init_prop() throws FileNotFoundException {
+        try {
+            FileInputStream fp = new FileInputStream("src/test/resources/config/config.properties");
+
+
+            prop = new Properties();
+            prop.load(fp);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return prop;
     }
 
 

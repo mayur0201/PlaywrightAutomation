@@ -32,9 +32,9 @@ public class HomePage {
         return url;
     }
 
-    public String doSearch(String prdouctName)
+    public String doSearch(String productName)
     {
-        page.fill(search,prdouctName);
+        page.fill(search,productName);
         page.click(searchButton);
         String header = page.textContent(pageHeader);
         System.out.println("Search Header:" + header);

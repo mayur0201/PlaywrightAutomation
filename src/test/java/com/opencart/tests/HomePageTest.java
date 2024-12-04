@@ -1,53 +1,38 @@
 package com.opencart.tests;
 
-import com.microsoft.playwright.Page;
-import com.opencart.Pages.HomePage;
-import com.opencart.factory.PlaywrightFactory;
+
+import com.opencart.base.BaseTest;
+
+import com.opencart.constants.ApplicationConstants;
 import org.testng.Assert;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
+
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-public class HomePageTest {
+public class HomePageTest extends BaseTest {
 
-    PlaywrightFactory pf ;
-    Page page;
-    HomePage hp;
-
-    @BeforeTest
-    public void setUp()
-    {
-        pf = new PlaywrightFactory();
-        page = pf.initBrowser("chromium");
-        hp = new HomePage(page);
-    }
 
     @Test
-    public void homepageTitleTest()
-    {
+    public void homepageTitleTest() {
         String actutalText = hp.getPageTitle();
-        Assert.assertEquals(actutalText,"Your Store");
+        Assert.assertEquals(actutalText, ApplicationConstants.LOGIN_PAGE_TITLE);
     }
 
     @Test
-    public void homepageUrlTest()
-    {
+    public void homepageUrlTest() {
         String actutalURL = hp.getHomePageURL();
-        Assert.assertEquals(actutalURL,"https://naveenautomationlabs.com/opencart/");
+        Assert.assertEquals(actutalURL, prop.getProperty("url"));
     }
 
     @Test(dataProvider = "getProductName")
-    public void searchProduct(String productName)
-    {
+    public void searchProduct(String productName) {
         String textHeader = hp.doSearch(productName);
-        Assert.assertEquals(textHeader,"Search - "+productName);
+        Assert.assertEquals(textHeader, "Search - " + productName);
 
     }
 
     @DataProvider
-    public Object[][] getProductName()
-    {
+    public Object[][] getProductName() {
         return new Object[][]
                 {
                         {"iMac"},
@@ -56,10 +41,5 @@ public class HomePageTest {
                 };
     }
 
-    @AfterTest
-    public void tearDown()
-    {
-        page.context().browser().close();
-    }
 
 }
