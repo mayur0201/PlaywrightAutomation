@@ -11,6 +11,9 @@ public class HomePage {
 
     private String pageHeader = "div#content h1";
 
+    private String loginLink = "a:text('Login')";
+    private String myAccountLink = "a[title='My Account']";
+
     public HomePage(Page page)
     {
         this.page = page;
@@ -41,5 +44,13 @@ public class HomePage {
         return header;
     }
 
+
+    public LoginPage navigateToLoginPage()
+    {
+        page.click(myAccountLink);
+        page.click(loginLink);
+
+        return new LoginPage(page);
+    }
 
 }
