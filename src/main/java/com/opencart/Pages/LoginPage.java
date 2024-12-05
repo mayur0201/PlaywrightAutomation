@@ -33,6 +33,7 @@ public class LoginPage {
          System.out.println("App Creds are" + appusername + ":" + appPassword);
          page.fill(emailID,appusername);
          page.fill(password,appPassword);
+
          page.click(loginButton);
          if(page.locator(logoutLink).isVisible()) {
              System.out.println("user is logged in successfully....");
