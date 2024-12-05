@@ -3,7 +3,9 @@
 
 <suite name="Open Cart Test Regression PW Suite" verbose="4" thread-count="2" parallel="tests">
     <listeners>
-        <listener class-name="org.testng.reporters.EmailableReporter2"/>
+        <listener
+                class-name="com.opencart.listeners.ExtentReportListener" />
+
     </listeners>
 
 
